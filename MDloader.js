@@ -7,12 +7,10 @@ import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { Pinecone as PineconeClient } from "@pinecone-database/pinecone";
 
 dotenv.config();
-
-// === CONFIGURATION ===
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// === INIT EMBEDDING + PINECONE ===
+// Vector DB
 const pinecone = new PineconeClient({
     apiKey: process.env.PINECONE_API_KEY, 
 });
@@ -24,7 +22,7 @@ const embedder = new GoogleGenerativeAIEmbeddings({
     apiKey: process.env.GEMINI_API_KEY, 
 }); 
 
-// === SPLIT AND WRITE FILES ===
+// Split Secion
 async function splitMarkdownByHeading(filePath) {
   const markdownContent = readFileSync(filePath, 'utf-8');
   const baseName = basename(filePath, '.md');
@@ -35,8 +33,8 @@ async function splitMarkdownByHeading(filePath) {
   }
 
   const parts = markdownContent.split(/^### /m);
-  const preamble = parts[0].trim(); // Everything before the first '###'
-  const sections = parts.slice(1); // Each section starts with a title line
+  const preamble = parts[0].trim(); // ###
+  const sections = parts.slice(1); // name of new file and section
 
   let idCounter = 1;
 
@@ -50,13 +48,13 @@ async function splitMarkdownByHeading(filePath) {
     const outputPath = join(outputDir, `${safeFileName}.md`);
 
     writeFileSync(outputPath, fullContent);
-    console.log(`✅ Created: ${outputPath}`);
+    console.log(`Created: ${outputPath}`);
 
-    // === Embed content ===
+    // Embed
     const embeddings = await embedder.embedQuery(fullContent);
 
-    // === Upsert to Pinecone ===
-    await pineconeIndex.namespace("IQ-TREE TEST").upsert([
+    // Upsert
+    await pineconeIndex.namespace("IQ-TREE Test 1").upsert([
       {
         id: `${baseName}-${idCounter}`,
         values: embeddings,
@@ -68,18 +66,18 @@ async function splitMarkdownByHeading(filePath) {
       }
     ]);
 
-    console.log(`📤 Upserted to Pinecone: ${baseName}-${idCounter}`);
+    console.log(` Upserted to Pinecone: ${baseName}-${idCounter}`);
     idCounter++;
   }
 }
 
-// === RUN LOOP Folder===
+// LOOP Folder docs
 const docsDir = join(__dirname, 'docs');
 
 const mdFiles = readdirSync(docsDir).filter(file => file.endsWith('.md'));
 
 for (const file of mdFiles) {
   const fullPath = join(docsDir, file);
-  console.log(`\n🔍 Processing file: ${file}`);
+  console.log(`\n Processing file: ${file}`);
   await splitMarkdownByHeading(fullPath);
 }
