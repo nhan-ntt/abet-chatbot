@@ -17,16 +17,27 @@ Chat History:
 Follow Up Input: {question}
 Standalone Question:`;
 
-const QA_PROMPT = `You are an AI chatbot specialized in answering questions about the phylogenetic software IQ-TREE.
+const STRICT_QA_PROMPT = `You are an AI chatbot specialized in answering questions about the phylogenetic software IQ-TREE.
 You are given the following extracted parts of a long document and a question.
 Provide a detailed, helpful, and accurate answer with explanations and examples if available.
-If you don't know the answer, just say "Hmm, I'm not sure." Don't try to make up an answer.
+If you don't know the answer, just say "Im not sure." Don't try to make up an answer.
 
 Context:
 {context}
 Question: {question}
 
 Detailed Answer:
+`;
+
+const CREATIVE_QA_PROMPT = `You are a creative and helpful AI assistant knowledgeable in phylogenetics, especially IQ-TREE.
+Use your imagination, reasoning, and related knowledge to generate helpful answers — even when the context is incomplete.
+You may speculate or infer answers based on related concepts, but always be clear and helpful.
+
+Context:
+{context}
+Question: {question}
+
+Creative Answer:
 `;
 
 // Lich su chat
@@ -40,7 +51,8 @@ const memory = new BufferMemory({
 const model = new ChatGoogleGenerativeAI({
     model: "gemini-1.5-flash", 
     apiKey: process.env.GEMINI_API_KEY as string, 
-    maxOutputTokens: 2048
+    maxOutputTokens: 2048,
+    temperature: 1
 });
 
 // Embedding
@@ -54,21 +66,25 @@ const pinecone = new PineconeClient({
     apiKey: process.env.PINECONE_API_KEY as string, 
 });
 // Vector DB index va namespace
-const pineconeIndex = pinecone.Index("flowise").namespace("default");
+const pineconeIndex = pinecone.Index("flowise").namespace("IQ-TREE TEST");
 
 // Ket noi Vector DB
  const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
     pineconeIndex,
 });
 
-export const makeChain = (vectorstore) => {
+let chatbotMode = 1;
+
+export const makeChain = (vectorstore, mode = 1) => {
+  const PROMPT = mode === 1 ? STRICT_QA_PROMPT : CREATIVE_QA_PROMPT;
+
   return ConversationalRetrievalQAChain.fromLLM(
     model,
     vectorstore.asRetriever(),
     {
-      qaTemplate: QA_PROMPT,
+      qaTemplate: PROMPT,
       questionGeneratorTemplate: CONDENSE_PROMPT,
-      returnSourceDocuments: true, 
+      returnSourceDocuments: false, 
       memory,
       inputKey: "question", 
       outputKey: "text",
@@ -77,7 +93,7 @@ export const makeChain = (vectorstore) => {
 };
 
 async function runChain() {
-  const chain = makeChain(vectorStore);
+  let chain = makeChain(vectorStore);
 
   const rl = readline.createInterface({ input: stdin, output: stdout });
 
@@ -88,6 +104,19 @@ async function runChain() {
       break;
     }
 
+    if (question.toLowerCase() === "chatbot 1") {
+      chatbotMode = 1;
+      chain = makeChain(vectorStore, chatbotMode);
+      console.log("Chatbot 1 Strict Mode");
+      continue;
+    }
+
+    if (question.toLowerCase() === "chatbot 2") {
+      chatbotMode = 2;
+      chain = makeChain(vectorStore, chatbotMode);
+      console.log("Chatbot 2 Creative Mode");
+      continue;
+    }
     const response = await chain.call({ question });
 
     console.log('ChatBot:', response.text); 
