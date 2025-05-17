@@ -5,8 +5,8 @@ import dotenv from 'dotenv';
 
 import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
 import { Pinecone as PineconeClient } from "@pinecone-database/pinecone";
-
 dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -15,15 +15,25 @@ const pinecone = new PineconeClient({
     apiKey: process.env.PINECONE_API_KEY, 
 });
 
-const pineconeIndex = pinecone.Index("flowise");
+const pineconeIndex = pinecone.Index("test");
 
-const embedder = new GoogleGenerativeAIEmbeddings({
+const embedding = new GoogleGenerativeAIEmbeddings({
     model: "text-embedding-004",
     apiKey: process.env.GEMINI_API_KEY, 
 }); 
 
-// Split Secion
-async function splitMarkdownByHeading(filePath) {
+// LOOP documentation
+const docsDir = join(__dirname, 'docs');
+
+const mdFiles = readdirSync(docsDir).filter(file => file.endsWith('.md'));
+
+for (const file of mdFiles) {
+  const fullPath = join(docsDir, file);
+  console.log(`\n Processing file: ${file}`);
+  await processFile(fullPath);
+}
+
+async function processFile(filePath) {
   const markdownContent = readFileSync(filePath, 'utf-8');
   const baseName = basename(filePath, '.md');
   const outputDir = join(__dirname, 'processed', baseName);
@@ -32,12 +42,14 @@ async function splitMarkdownByHeading(filePath) {
     mkdirSync(outputDir, { recursive: true });
   }
 
+// Split Secion 
   const parts = markdownContent.split(/^### /m);
-  const preamble = parts[0].trim(); // ###
-  const sections = parts.slice(1); // name of new file and section
+  const preamble = parts[0].trim(); // thông tin chung
+  const sections = parts.slice(1); // tên file
 
-  let idCounter = 1;
+  let indexID = 1;
 
+  // moi section tao 1 file
   for (const section of sections) {
     const firstLineEnd = section.indexOf('\n');
     const title = section.slice(0, firstLineEnd).trim();
@@ -51,33 +63,24 @@ async function splitMarkdownByHeading(filePath) {
     console.log(`Created: ${outputPath}`);
 
     // Embed
-    const embeddings = await embedder.embedQuery(fullContent);
+    const embeddings = await embedding.embedQuery(fullContent);
 
     // Upsert
-    await pineconeIndex.namespace("IQ-TREE Test 1").upsert([
+    await pineconeIndex.namespace("IQ-TREE").upsert([
       {
-        id: `${baseName}-${idCounter}`,
+        id: `${baseName}-${indexID}`,
         values: embeddings,
         metadata: {
-          title: `${title}`,
+          title: title,
           source: `IQ-TREE Wiki ${baseName}`,
           text: fullContent,
         }
       }
     ]);
 
-    console.log(` Upserted to Pinecone: ${baseName}-${idCounter}`);
-    idCounter++;
+    console.log(` Upsert to Pinecone: ${baseName}-${indexID}`);
+    indexID++;
   }
 }
 
-// LOOP Folder docs
-const docsDir = join(__dirname, 'docs');
 
-const mdFiles = readdirSync(docsDir).filter(file => file.endsWith('.md'));
-
-for (const file of mdFiles) {
-  const fullPath = join(docsDir, file);
-  console.log(`\n Processing file: ${file}`);
-  await splitMarkdownByHeading(fullPath);
-}

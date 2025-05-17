@@ -87,7 +87,14 @@ const makeChain = (vectorstore, mode = 1) => {
 
   return ConversationalRetrievalQAChain.fromLLM(
     model,
-    vectorstore.asRetriever(),
+    vectorstore.asRetriever({
+      searchType: "mmr",
+      searchKwargs: {
+        fetchK: 15,
+        k: 5,
+        lambda: 0.3
+      }
+    }),
     {
       qaTemplate: PROMPT,
       questionGeneratorTemplate: CONDENSE_PROMPT,
