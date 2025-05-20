@@ -1,15 +1,76 @@
+// Improvement: GraphRAG, Rerank, AI Agent, UI, Data Quality, Evaluation
+// Should start build in Python :(
 import { BufferMemory } from "langchain/memory";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
-
-import { ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
+import {
+  ChatGoogleGenerativeAI,
+  GoogleGenerativeAIEmbeddings,
+} from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";
-import { PineconeStore } from '@langchain/pinecone';
+import { PineconeStore } from "@langchain/pinecone";
 import { Pinecone as PineconeClient } from "@pinecone-database/pinecone";
-
-import * as readline from 'node:readline/promises';
-import { stdin, stdout } from 'node:process';
-import dotenv from 'dotenv';
+import * as readline from "node:readline/promises";
+import { stdin, stdout } from "node:process";
+import dotenv from "dotenv";
 dotenv.config();
+
+interface AppConfig {
+  GEMINI_API_KEY: string;
+  GEMINI_LLM_MODEL: string;
+  GEMINI_LLM_MAX_TOKEN: number;
+  GEMINI_LLM_TEMPERATURE: number;
+  GEMINI_EMBEDDING_MODEL: string;
+
+  PINECONE_API_KEY: string;
+  PINECONE_TEST_INDEX: string;
+  PINECONE_PROD_INDEX: string;
+  PINECONE_PROD_NAMESPACE: string;
+  PINECONE_TEST_NAMESPACE: string;
+}
+
+function loadConfig(): AppConfig {
+  const GeminiAPI = process.env.GEMINI_API_KEY;
+  const PineconeAPI = process.env.PINECONE_API_KEY;
+
+  if (!GeminiAPI) {
+    throw new Error("Missing GEMINI_API_KEY in .env file");
+  }
+  if (!PineconeAPI) {
+    throw new Error("Missing PINECONE_API_KEY in .env file");
+  }
+
+  const config: AppConfig = {
+    GEMINI_API_KEY: GeminiAPI,
+    GEMINI_LLM_MODEL: process.env.GEMINI_LLM_MODEL || "gemini-1.5-flash",
+    GEMINI_LLM_MAX_TOKEN: parseInt(process.env.GEMINI_LLM_MAX_TOKEN || "2048"),
+    GEMINI_LLM_TEMPERATURE: parseFloat(
+      process.env.GEMINI_LLM_TEMPERATURE || "0.6"
+    ),
+    GEMINI_EMBEDDING_MODEL:
+      process.env.GEMINI_EMBEDDING_MODEL || "text-embedding-004",
+
+    PINECONE_API_KEY: PineconeAPI,
+    PINECONE_PROD_INDEX: process.env.PINECONE_PROD_INDEX || "flowise",
+    PINECONE_PROD_NAMESPACE: process.env.PINECONE_PROD_NAMESPACE || "default",
+    PINECONE_TEST_INDEX: process.env.PINECONE_TEST_INDEX || "test",
+    PINECONE_TEST_NAMESPACE:
+      process.env.PINECONE_TEST_NAMESPACE || "IQ-TREE Test 1",
+  };
+
+  return config;
+}
+
+const CHATBOT_MODE = {
+  STRICT: 1,
+  CREATIVE: 2,
+};
+
+const COMMAND = {
+  EXIT: "exit",
+  SWITCH_TO_STRICT: "chatbot 1",
+  SWITCH_TO_CREATIVE: "chatbot 2",
+  HELP: "help",
+};
 
 const CONDENSE_PROMPT = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
 
@@ -21,7 +82,7 @@ Standalone Question:`;
 const STRICT_QA_PROMPT = `You are an AI chatbot specialized in answering questions about the phylogenetic software IQ-TREE.
 You are given the following extracted parts of a long document and a question.
 Provide a detailed, helpful, and accurate answer with explanations and examples if available.
-If you don't know the answer, just say "Im not sure." Don't try to make up an answer.
+If the context is not related to the question, just only say "Im not sure." Don't try to make up an answer.
 
 Context:
 {context}
@@ -41,101 +102,166 @@ Question: {question}
 Creative Answer:
 `;
 
-// Lich su chat
-const chat_history = new BufferMemory({
+async function main() {
+  const CONFIG = loadConfig();
+
+  // Lich su chat va cac bien trong Prompt
+  const chat_history = new BufferMemory({
     memoryKey: "chat_history",
-    inputKey: "question",      
-    outputKey: "text",         
+    inputKey: "question",
+    outputKey: "text",
     returnMessages: true,
-});
+  });
 
-// LLM
-const model = new ChatGoogleGenerativeAI({
-    model: "gemini-1.5-flash", 
-    apiKey: process.env.GEMINI_API_KEY as string, 
-    maxOutputTokens: 2048,
-    temperature: 0.6
-});
+  // LLM
+  const model = new ChatGoogleGenerativeAI({
+    model: CONFIG.GEMINI_LLM_MODEL,
+    apiKey: CONFIG.GEMINI_API_KEY,
+    maxOutputTokens: CONFIG.GEMINI_LLM_MAX_TOKEN,
+    temperature: CONFIG.GEMINI_LLM_TEMPERATURE,
+  });
 
-// Embedding
-const embeddings = new GoogleGenerativeAIEmbeddings({
-  model: "text-embedding-004",
-  apiKey: process.env.GEMINI_API_KEY as string, 
-  taskType: TaskType.RETRIEVAL_QUERY
-}); 
+  // Embedding
+  const embeddings = new GoogleGenerativeAIEmbeddings({
+    model: CONFIG.GEMINI_EMBEDDING_MODEL,
+    apiKey: CONFIG.GEMINI_API_KEY,
+    taskType: TaskType.RETRIEVAL_QUERY,
+  });
 
-// Pinecone client
-const pinecone = new PineconeClient({
-    apiKey: process.env.PINECONE_API_KEY as string, 
-});
+  // Pinecone
+  const pinecone = new PineconeClient({
+    apiKey: CONFIG.PINECONE_API_KEY,
+  });
+  const pineconeIndex = pinecone
+    .Index(CONFIG.PINECONE_PROD_INDEX)
+    .namespace(CONFIG.PINECONE_PROD_NAMESPACE);
+  const pineconeIndexTest = pinecone
+    .Index(CONFIG.PINECONE_TEST_INDEX)
+    .namespace(CONFIG.PINECONE_TEST_NAMESPACE);
 
-// Vector DB index va namespace
-const pineconeIndex = pinecone.Index("flowise").namespace("default");
-const pineconeIndexTest = pinecone.Index("test").namespace("IQ-TREE Test 1");
+  // Ket noi Pinecone
+  let vectorStore, vectorStoreTest;
+  try {
+    vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex: pineconeIndex,
+    });
+    vectorStoreTest = await PineconeStore.fromExistingIndex(embeddings, {
+      pineconeIndex: pineconeIndexTest,
+    });
+  } catch (error) {
+    console.error("Failed to initialize Pinecone vector stores:", error);
+    process.exit(1);
+  }
 
-// Ket noi Vector DB voi Embedding
- const vectorStore = await PineconeStore.fromExistingIndex(embeddings, {
-    pineconeIndex: pineconeIndex,
-});
+  const makeChain = (vectorstore, mode = CHATBOT_MODE.STRICT) => {
+    const PROMPT =
+      mode === CHATBOT_MODE.STRICT ? STRICT_QA_PROMPT : CREATIVE_QA_PROMPT;
+    const lambda = mode === CHATBOT_MODE.STRICT ? 0.8 : 0.5;
+    // const scoreThreshold = mode === 1 ? 0.8 : 0.5; // Further improve Retrieval
 
-const vectorStoreTest = await PineconeStore.fromExistingIndex(embeddings, {
-    pineconeIndex: pineconeIndexTest,
-})
+    return ConversationalRetrievalQAChain.fromLLM(
+      model,
+      vectorstore.asRetriever({
+        searchType: "mmr", // Further Improve use Cohere?
+        search_kwargs: {
+          fetchK: 15,
+          k: 5,
+          lambda: lambda,
+        },
+      }),
+      {
+        qaTemplate: PROMPT,
+        questionGeneratorTemplate: CONDENSE_PROMPT,
+        returnSourceDocuments: true,
+        memory: chat_history,
+        inputKey: "question",
+        outputKey: "text",
+      }
+    );
+  };
 
-const makeChain = (vectorstore, mode = 1) => {
-  const PROMPT = mode === 1 ? STRICT_QA_PROMPT : CREATIVE_QA_PROMPT;
+  const strictChain = makeChain(vectorStore, CHATBOT_MODE.STRICT);
+  const creativeChain = makeChain(vectorStore, CHATBOT_MODE.CREATIVE);
+  await runInteractiveLoop(strictChain, creativeChain);
+}
 
-  return ConversationalRetrievalQAChain.fromLLM(
-    model,
-    vectorstore.asRetriever(),
-    {
-      qaTemplate: PROMPT,
-      questionGeneratorTemplate: CONDENSE_PROMPT,
-      returnSourceDocuments: false, 
-      memory: chat_history,
-      inputKey: "question", 
-      outputKey: "text",
-    }
-  );
-};
-const strictChain = makeChain(vectorStore, 1);
-const creativeChain = makeChain(vectorStore, 2);
+async function runInteractiveLoop(
+  strictChainInstance: ConversationalRetrievalQAChain,
+  creativeChainInstance: ConversationalRetrievalQAChain,
+) {
 
-let currentChain = strictChain;
+  let currentChain: ConversationalRetrievalQAChain = strictChainInstance;
+  let currentMode = "Strict";
 
-async function runChain() {
   const rl = readline.createInterface({ input: stdin, output: stdout });
+  console.log(`Chatbot initialized. Currently in ${currentMode} Mode.`);
+  console.log(
+    "Type 'exit' to quit, 'chatbot 1' for Strict Mode, 'chatbot 2' for Creative Mode, or 'help'."
+  );
 
   while (true) {
-    const question = await rl.question('You: ');
+    const question = await rl.question("You: ");
+    const lowercaseQuestion = question.toLocaleLowerCase();
 
-    if (question.toLowerCase() === "exit") {
+    if (lowercaseQuestion === COMMAND.EXIT) {
+      console.log("Exiting chatbot. Goodbye!");
       break;
     }
 
-    if (question.toLowerCase() === "chatbot 1") {
-      currentChain = strictChain;
-      console.log("Chatbot 1 Strict Mode");
+    if (lowercaseQuestion === COMMAND.SWITCH_TO_STRICT) {
+      currentChain = strictChainInstance;
+      currentMode = "Strict";
+      console.log("Switched to Chatbot 1 Strict Mode");
       continue;
     }
 
-    if (question.toLowerCase() === "chatbot 2") {
-      currentChain = creativeChain;
-      console.log("Chatbot 2 Creative Mode");
+    if (lowercaseQuestion === COMMAND.SWITCH_TO_CREATIVE) {
+      currentChain = creativeChainInstance;
+      currentMode = "Creative";
+      console.log("Switched to Chatbot 2 Creative Mode");
       continue;
     }
-    const response = await currentChain.call({ question });
 
-    console.log('ChatBot:', response.text); 
+    if (lowercaseQuestion === COMMAND.HELP) {
+      console.log(`Available commands:
+    ${COMMAND.EXIT}: Exit the chatbot.
+    ${COMMAND.SWITCH_TO_STRICT}: Switch to Strict Mode (IQ-TREE specific context).
+    ${COMMAND.SWITCH_TO_CREATIVE}: Switch to Creative Mode (broader phylogenetics, speculative).
+    ${COMMAND.HELP}: Show this help message.`);
+      continue;
+    }
 
-    if (response.sourceDocuments) {
+    if (question === "") {
+      continue;
+    }
+
+    console.log("ChatBot is thinking...");
+
+    try {
+      const response = await currentChain.call({ question });
+      const answer = response.text;
+      console.log("ChatBot:", answer);
+
+      if (response.sourceDocuments) {
         console.log("\nSource:");
         response.sourceDocuments.forEach((doc, i) => {
           console.log(`\n[${i + 1}] ${doc.metadata.source || "unknown"}`);
-          console.log(doc.pageContent.slice(0, 300) + "...");
         });
+      } else {
+        console.log("\nNo source documents were retrieved.");
       }
+    } catch (error) {
+      console.error("Error during chain execution:", error);
+      console.log(
+        "ChatBot: I encountered an error. Please try again or check the console for details."
+      );
+    }
+    console.log("\n------------------------------------\n");
   }
+  rl.close();
 }
 
-runChain();
+main().catch((error) => {
+  console.error("Unhandled error", error);
+  process.exit(1);
+});
