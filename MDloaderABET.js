@@ -1,4 +1,4 @@
-import { readFileSync, existsSync, mkdirSync, writeFileSync, readdirSync } from 'fs';
+import { readFileSync, existsSync, mkdirSync, writeFileSync } from 'fs';
 import { dirname, basename, join } from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
@@ -10,53 +10,50 @@ dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Vector DB
+// Vector DB setup
 const pinecone = new PineconeClient({
     apiKey: process.env.PINECONE_API_KEY, 
 });
 
-// const pineconeIndex = pinecone.Index("test");
-const pineconeIndex = pinecone.Index("flowise");
+const pineconeIndex = pinecone.Index(process.env.PINECONE_PROD_INDEX_ABET);
 
 const embedding = new GoogleGenerativeAIEmbeddings({
     model: "text-embedding-004",
     apiKey: process.env.GEMINI_API_KEY, 
 }); 
 
-// LOOP documentation
-const docsDir = join(__dirname, 'docs');
+// // Clear existing data from namespace
+// console.log('Clearing existing data from namespace...');
+// await pineconeIndex.namespace(process.env.PINECONE_PROD_NAMESPACE).deleteAll();
+// console.log('Namespace cleared successfully!');
 
-const mdFiles = readdirSync(docsDir).filter(file => file.endsWith('.md'));
+// Process abet.md
+const outputPath = join(__dirname, 'abet.md');
+await processFile(outputPath);
 
-for (const file of mdFiles) {
-  const fullPath = join(docsDir, file);
-  console.log(`\n Processing file: ${file}`);
-  await processFile(fullPath);
-}
 
 async function processFile(filePath) {
   const markdownContent = readFileSync(filePath, 'utf-8');
   const baseName = basename(filePath, '.md');
-  const outputDir = join(__dirname, 'processed', baseName);
+  const outputDir = join(__dirname, 'abet', baseName);
 
   if (!existsSync(outputDir)) {
     mkdirSync(outputDir, { recursive: true });
   }
 
-// Split Secion 
-  const parts = markdownContent.split(/^### /m);
-  const preamble = parts[0].trim(); // thông tin chung
-  const sections = parts.slice(1); // tên file
+  // Split by ## headers for ABET content
+  const parts = markdownContent.split(/^## /m);
+  const preamble = parts[0].trim();
+  const sections = parts.slice(1);
 
   let indexID = 1;
 
-  // moi section tao 1 file
   for (const section of sections) {
     const firstLineEnd = section.indexOf('\n');
     const title = section.slice(0, firstLineEnd).trim();
     const body = section.slice(firstLineEnd).trim();
     
-    const fullContent = `${preamble}\n\n### ${title}\n\n${body}`;
+    const fullContent = `${preamble}\n\n## ${title}\n\n${body}`;
     const safeFileName = title.replace(/[\\/:*?"<>|]/g, '').trim();
     const outputPath = join(outputDir, `${safeFileName}.md`);
 
@@ -66,22 +63,20 @@ async function processFile(filePath) {
     // Embed
     const embeddings = await embedding.embedQuery(fullContent);
 
-    // Upsert
-    await pineconeIndex.namespace("IQ-TREE").upsert([
+    // Upsert to Pinecone
+    await pineconeIndex.namespace(process.env.PINECONE_PROD_NAMESPACE).upsert([
       {
         id: `${baseName}-${indexID}`,
         values: embeddings,
         metadata: {
           title: title,
-          source: `IQ-TREE Wiki ${baseName}`,
+          source: `ABET Documentation - ${title}`,
           text: fullContent,
         }
       }
     ]);
 
-    console.log(` Upsert to Pinecone: ${baseName}-${indexID}`);
+    console.log(`Upsert to Pinecone: ${baseName}-${indexID}`);
     indexID++;
   }
 }
-
-

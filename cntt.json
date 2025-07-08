@@ -1,0 +1,895 @@
+{
+  "ten_chuong_trinh": "Chương trình đào tạo ngành Công nghệ thông tin",
+  "khoi_kien_thuc": [
+    {
+      "ten_khoi": "Khối kiến thức chung",
+      "tong_tin_chi": 16,
+      "ghi_chu": "Chưa tính các học phần Giáo dục thể chất, Giáo dục Quốc phòng – An ninh",
+      "hoc_phan": [
+        {
+          "stt": 1,
+          "ma_hoc_phan": "PHI1006",
+          "ten_tieng_viet": "Triết học Mác – Lênin",
+          "ten_tieng_anh": "Marxist-Leninist Philosophy",
+          "so_tin_chi": 3,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 15,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 2,
+          "ma_hoc_phan": "PEC1008",
+          "ten_tieng_viet": "Kinh tế chính trị Mác – Lênin",
+          "ten_tieng_anh": "Marx-Lenin Political Economy",
+          "so_tin_chi": 2,
+          "so_gio_hoc": {
+            "ly_thuyet": 20,
+            "thuc_hanh": 10,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "PHI1006"
+          ]
+        },
+        {
+          "stt": 3,
+          "ma_hoc_phan": "PHI1002",
+          "ten_tieng_viet": "Chủ nghĩa xã hội khoa học",
+          "ten_tieng_anh": "Scientific Socialism",
+          "so_tin_chi": 2,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 0,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 4,
+          "ma_hoc_phan": "HIS1001",
+          "ten_tieng_viet": "Lịch sử Đảng Cộng sản Việt Nam",
+          "ten_tieng_anh": "Revolutionary Guidelines of Vietnam Communist Party",
+          "so_tin_chi": 2,
+          "so_gio_hoc": {
+            "ly_thuyet": 20,
+            "thuc_hanh": 10,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 5,
+          "ma_hoc_phan": "POL1001",
+          "ten_tieng_viet": "Tư tưởng Hồ Chí Minh",
+          "ten_tieng_anh": "Ho Chi Minh’s Ideology",
+          "so_tin_chi": 2,
+          "so_gio_hoc": {
+            "ly_thuyet": 20,
+            "thuc_hanh": 10,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 6,
+          "ma_hoc_phan": "FLF1107",
+          "ten_tieng_viet": "Tiếng Anh B1",
+          "ten_tieng_anh": "English B1",
+          "so_tin_chi": 5,
+          "so_gio_hoc": {
+            "ly_thuyet": 20,
+            "thuc_hanh": 35,
+            "tu_hoc": 20
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 7,
+          "ma_hoc_phan": null,
+          "ten_tieng_viet": "Giáo dục thể chất",
+          "ten_tieng_anh": "Physical Education",
+          "so_tin_chi": 4,
+          "so_gio_hoc": null,
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 8,
+          "ma_hoc_phan": null,
+          "ten_tieng_viet": "Giáo dục quốc phòng – an ninh",
+          "ten_tieng_anh": "National Defence Education",
+          "so_tin_chi": 8,
+          "so_gio_hoc": null,
+          "mon_hoc_tien_quyet": []
+        }
+      ]
+    },
+    {
+      "ten_khoi": "Khối kiến thức theo lĩnh vực",
+      "tong_tin_chi": 22,
+      "hoc_phan": [
+        {
+          "stt": 9,
+          "ma_hoc_phan": "MAT1093",
+          "ten_tieng_viet": "Đại số",
+          "ten_tieng_anh": "Algebra",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 10,
+          "ma_hoc_phan": "MAT1041",
+          "ten_tieng_viet": "Giải tích 1",
+          "ten_tieng_anh": "Calculus 1",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 11,
+          "ma_hoc_phan": "MAT1042",
+          "ten_tieng_viet": "Giải tích 2",
+          "ten_tieng_anh": "Calculus 2",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "MAT1041"
+          ]
+        },
+        {
+          "stt": 12,
+          "ma_hoc_phan": "EPN1095",
+          "ten_tieng_viet": "Vật lý đại cương 1",
+          "ten_tieng_anh": "General Physics 1",
+          "so_tin_chi": 2,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 0,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 13,
+          "ma_hoc_phan": "EPN1096",
+          "ten_tieng_viet": "Vật lý đại cương 2",
+          "ten_tieng_anh": "General Physics 2",
+          "so_tin_chi": 2,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 0,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "EPN1095"
+          ]
+        },
+        {
+          "stt": 14,
+          "ma_hoc_phan": "INT1007",
+          "ten_tieng_viet": "Giới thiệu về Công nghệ thông tin",
+          "ten_tieng_anh": "Introduction to Information Technology",
+          "so_tin_chi": 3,
+          "so_gio_hoc": {
+            "ly_thuyet": 15,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 15,
+          "ma_hoc_phan": "INT1008",
+          "ten_tieng_viet": "Nhập môn lập trình",
+          "ten_tieng_anh": "Introduction to Programming",
+          "so_tin_chi": 3,
+          "so_gio_hoc": {
+            "ly_thuyet": 20,
+            "thuc_hanh": 25,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        }
+      ]
+    },
+    {
+      "ten_khoi": "Khối kiến thức theo khối ngành",
+      "tong_tin_chi": 10,
+      "hoc_phan": [
+        {
+          "stt": 16,
+          "ma_hoc_phan": "ELT2035",
+          "ten_tieng_viet": "Tín hiệu và hệ thống",
+          "ten_tieng_anh": "Signals and systems",
+          "so_tin_chi": 3,
+          "so_gio_hoc": {
+            "ly_thuyet": 45,
+            "thuc_hanh": 0,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "MAT1042"
+          ]
+        },
+        {
+          "stt": 17,
+          "ma_hoc_phan": "INT2210",
+          "ten_tieng_viet": "Cấu trúc dữ liệu và giải thuật",
+          "ten_tieng_anh": "Data structures and algorithms",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1008"
+          ]
+        },
+        {
+          "stt": 18,
+          "ghi_chu": "Lựa chọn 1 trong 2 học phần",
+          "so_tin_chi": 3,
+          "lua_chon": [
+            {
+              "ma_hoc_phan": "ELT2029",
+              "ten_tieng_viet": "Toán trong công nghệ",
+              "ten_tieng_anh": "Mathematics for Engineering",
+              "so_gio_hoc": {
+                "ly_thuyet": 45,
+                "thuc_hanh": 0,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "MAT1041"
+              ]
+            },
+            {
+              "ma_hoc_phan": "MAT1101",
+              "ten_tieng_viet": "Xác suất thống kê",
+              "ten_tieng_anh": "Probability and Statistics",
+              "so_gio_hoc": {
+                "ly_thuyet": 30,
+                "thuc_hanh": 15,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "MAT1041"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "ten_khoi": "Khối kiến thức theo nhóm ngành",
+      "tong_tin_chi": 30,
+      "hoc_phan": [
+        {
+          "stt": 19,
+          "ma_hoc_phan": "INT2215",
+          "ten_tieng_viet": "Lập trình nâng cao",
+          "ten_tieng_anh": "Advanced Programming",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1008"
+          ]
+        },
+        {
+          "stt": 20,
+          "ma_hoc_phan": "INT1050",
+          "ten_tieng_viet": "Toán học rời rạc",
+          "ten_tieng_anh": "Discrete Mathematics",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 45,
+            "thuc_hanh": 15,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": []
+        },
+        {
+          "stt": 21,
+          "ma_hoc_phan": "INT2212",
+          "ten_tieng_viet": "Kiến trúc máy tính",
+          "ten_tieng_anh": "Computer Architecture",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 45,
+            "thuc_hanh": 15,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1007"
+          ]
+        },
+        {
+          "stt": 22,
+          "ma_hoc_phan": "INT2214",
+          "ten_tieng_viet": "Nguyên lý hệ điều hành",
+          "ten_tieng_anh": "Principles of operating systems",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 45,
+            "thuc_hanh": 15,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1008"
+          ]
+        },
+        {
+          "stt": 23,
+          "ma_hoc_phan": "INT2211",
+          "ten_tieng_viet": "Cơ sở dữ liệu",
+          "ten_tieng_anh": "Database",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1008"
+          ]
+        },
+        {
+          "stt": 24,
+          "ma_hoc_phan": "INT2213",
+          "ten_tieng_viet": "Mạng máy tính",
+          "ten_tieng_anh": "Computer Network",
+          "so_tin_chi": 4,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 30,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1008"
+          ]
+        },
+        {
+          "stt": 25,
+          "ma_hoc_phan": "INT2208",
+          "ten_tieng_viet": "Công nghệ phần mềm",
+          "ten_tieng_anh": "Software Engineering",
+          "so_tin_chi": 3,
+          "so_gio_hoc": {
+            "ly_thuyet": 45,
+            "thuc_hanh": 0,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1008"
+          ]
+        },
+        {
+          "stt": 26,
+          "ma_hoc_phan": "INT2204",
+          "ten_tieng_viet": "Lập trình hướng đối tượng",
+          "ten_tieng_anh": "Object-oriented Programming",
+          "so_tin_chi": 3,
+          "so_gio_hoc": {
+            "ly_thuyet": 30,
+            "thuc_hanh": 15,
+            "tu_hoc": null
+          },
+          "mon_hoc_tien_quyet": [
+            "INT1008"
+          ]
+        }
+      ]
+    },
+    {
+      "ten_khoi": "Khối kiến thức ngành",
+      "tong_tin_chi": 48,
+      "cac_nhom_hoc_phan": [
+        {
+          "ten_nhom": "Các học phần bắt buộc",
+          "tong_tin_chi": 18,
+          "hoc_phan": [
+            {
+              "stt": 27,
+              "ma_hoc_phan": "INT3202",
+              "ten_tieng_viet": "Hệ quản trị cơ sở dữ liệu",
+              "ten_tieng_anh": "Database Management Systems",
+              "so_tin_chi": 3,
+              "so_gio_hoc": {
+                "ly_thuyet": 30,
+                "thuc_hanh": 15,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "INT2211"
+              ]
+            },
+            {
+              "stt": 28,
+              "ma_hoc_phan": "INT3110",
+              "ten_tieng_viet": "Phân tích và thiết kế hướng đối tượng",
+              "ten_tieng_anh": "Object-oriented Analysis and Design",
+              "so_tin_chi": 3,
+              "so_gio_hoc": {
+                "ly_thuyet": 45,
+                "thuc_hanh": 0,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "INT2204"
+              ]
+            },
+            {
+              "stt": 29,
+              "ma_hoc_phan": "INT3306",
+              "ten_tieng_viet": "Phát triển ứng dụng Web",
+              "ten_tieng_anh": "Web Application Development",
+              "so_tin_chi": 3,
+              "so_gio_hoc": {
+                "ly_thuyet": 30,
+                "thuc_hanh": 15,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "INT2204",
+                "INT2211"
+              ]
+            },
+            {
+              "stt": 30,
+              "ma_hoc_phan": "INT3401",
+              "ten_tieng_viet": "Trí tuệ nhân tạo",
+              "ten_tieng_anh": "Artificial Intellegence",
+              "so_tin_chi": 3,
+              "so_gio_hoc": {
+                "ly_thuyet": 45,
+                "thuc_hanh": 0,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "INT2210"
+              ]
+            },
+            {
+              "stt": 31,
+              "ma_hoc_phan": "INT3507",
+              "ten_tieng_viet": "Các vấn đề hiện đại Công nghệ thông tin",
+              "ten_tieng_anh": "Advanced Topics in Information Technology",
+              "so_tin_chi": 3,
+              "so_gio_hoc": {
+                "ly_thuyet": 21,
+                "thuc_hanh": 24,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "INT1007"
+              ]
+            },
+            {
+              "stt": 32,
+              "ma_hoc_phan": "INT3508",
+              "ten_tieng_viet": "Thực tập chuyên ngành",
+              "ten_tieng_anh": "Professional Internship",
+              "so_tin_chi": 3,
+              "so_gio_hoc": {
+                "ly_thuyet": 15,
+                "thuc_hanh": 30,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": [
+                "INT1007"
+              ]
+            }
+          ]
+        },
+        {
+          "ten_nhom": "Các học phần tự chọn",
+          "tong_tin_chi": 18,
+          "ghi_chu": "Lấy 18 trong 90 tín chỉ tự chọn",
+          "dinh_huong": [
+            {
+              "ten_dinh_huong": "Công nghệ phần mềm",
+              "hoc_phan": [
+                {
+                  "stt": 33,
+                  "ma_hoc_phan": "INT3117",
+                  "ten_tieng_viet": "Kiểm thử và đảm bảo chất lượng phần mềm",
+                  "ten_tieng_anh": "Software Testing and Quality Assurance",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2204" ]
+                },
+                {
+                  "stt": 34,
+                  "ma_hoc_phan": "INT3105",
+                  "ten_tieng_viet": "Kiến trúc phần mềm",
+                  "ten_tieng_anh": "Software Architecture",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2204" ]
+                },
+                {
+                  "stt": 35,
+                  "ma_hoc_phan": "INT3106",
+                  "ten_tieng_viet": "Phương pháp hình thức",
+                  "ten_tieng_anh": "Formal Methods",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT1050" ]
+                },
+                {
+                  "stt": 36,
+                  "ma_hoc_phan": "INT3108",
+                  "ten_tieng_viet": "Lập trình nhúng và thời gian thực",
+                  "ten_tieng_anh": "Real-time and embedded programming",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2212", "INT2215" ]
+                },
+                {
+                  "stt": 37,
+                  "ma_hoc_phan": "INT3109",
+                  "ten_tieng_viet": "Thu thập và phân tích yêu cầu",
+                  "ten_tieng_anh": "Requyrement Engineering",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2208" ]
+                },
+                {
+                  "stt": 38,
+                  "ma_hoc_phan": "INT3111",
+                  "ten_tieng_viet": "Quản lý dự án phần mềm",
+                  "ten_tieng_anh": "Software Project Management",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2208" ]
+                },
+                {
+                  "stt": 39,
+                  "ma_hoc_phan": "INT3115",
+                  "ten_tieng_viet": "Thiết kế giao diện người dùng",
+                  "ten_tieng_anh": "User Interface Design",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2204" ]
+                },
+                {
+                  "stt": 40,
+                  "ma_hoc_phan": "INT3120",
+                  "ten_tieng_viet": "Phát triển ứng dụng di động",
+                  "ten_tieng_anh": "Mobile Application Development",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT1008" ]
+                },
+                {
+                  "stt": 41,
+                  "ma_hoc_phan": "INT3415",
+                  "ten_tieng_viet": "Phát triển ứng dụng di động nâng cao",
+                  "ten_tieng_anh": "AdvancedMobile Application Development",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT1008" ]
+                }
+              ]
+            },
+            {
+              "ten_dinh_huong": "Hệ thống thông tin",
+               "hoc_phan": [
+                {
+                  "stt": 42,
+                  "ma_hoc_phan": "INT3206",
+                  "ten_tieng_viet": "Cơ sở dữ liệu phân tán",
+                  "ten_tieng_anh": "Distributed Database",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2211" ]
+                },
+                {
+                  "stt": 43,
+                  "ma_hoc_phan": "INT3207",
+                  "ten_tieng_viet": "Kho dữ liệu",
+                  "ten_tieng_anh": "Data warehouse",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2211" ]
+                },
+                {
+                  "stt": 44,
+                  "ma_hoc_phan": "INT3209",
+                  "ten_tieng_viet": "Khai phá dữ liệu",
+                  "ten_tieng_anh": "Data Mining",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2211" ]
+                },
+                {
+                  "stt": 45,
+                  "ma_hoc_phan": "INT3213",
+                  "ten_tieng_viet": "Nhập môn an toàn thông tin",
+                  "ten_tieng_anh": "Introduction to Information Security",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": []
+                },
+                {
+                  "stt": 46,
+                  "ma_hoc_phan": "INT3216",
+                  "ten_tieng_viet": "Phân tích, đánh giá hiệu năng hệ thống",
+                  "ten_tieng_anh": "System Performance Evaluations and Analysis",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2211" ]
+                },
+                {
+                  "stt": 47,
+                  "ma_hoc_phan": "INT3211",
+                  "ten_tieng_viet": "Tích hợp hệ thống",
+                  "ten_tieng_anh": "System Integration",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": []
+                },
+                {
+                  "stt": 48,
+                  "ma_hoc_phan": "INT2020",
+                  "ten_tieng_viet": "Phân tích thiết kế các HTTT",
+                  "ten_tieng_anh": "Information System Analysis and Design",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2211" ]
+                }
+              ]
+            },
+            {
+              "ten_dinh_huong": "Mạng và truyền thông máy tính",
+               "hoc_phan": [
+                {
+                  "stt": 49,
+                  "ma_hoc_phan": "INT3301",
+                  "ten_tieng_viet": "Thực hành hệ điều hành mạng",
+                  "ten_tieng_anh": "Network operating system lab",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 15, "thuc_hanh": 30, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT1008" ]
+                },
+                {
+                  "stt": 50,
+                  "ma_hoc_phan": "INT3303",
+                  "ten_tieng_viet": "Mạng không dây",
+                  "ten_tieng_anh": "Wireless Networks",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 36, "thuc_hanh": 9, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2213" ]
+                },
+                {
+                  "stt": 51,
+                  "ma_hoc_phan": "INT3304",
+                  "ten_tieng_viet": "Lập trình mạng",
+                  "ten_tieng_anh": "Network Programing",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2213" ]
+                },
+                {
+                  "stt": 52,
+                  "ma_hoc_phan": "INT3305",
+                  "ten_tieng_viet": "Truyền thông đa phương tiện",
+                  "ten_tieng_anh": "Multimedia Communications",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2213" ]
+                },
+                {
+                  "stt": 53,
+                  "ma_hoc_phan": "INT3307",
+                  "ten_tieng_viet": "An toàn và an ninh mạng",
+                  "ten_tieng_anh": "Network Safety and Security",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 39, "thuc_hanh": 6, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2213" ]
+                },
+                {
+                  "stt": 54,
+                  "ma_hoc_phan": "INT3319",
+                  "ten_tieng_viet": "Điện toán đám mây",
+                  "ten_tieng_anh": "Cloud computing",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT1008" ]
+                },
+                {
+                  "stt": 55,
+                  "ma_hoc_phan": "INT3310",
+                  "ten_tieng_viet": "Quản trị mạng",
+                  "ten_tieng_anh": "Network Administration",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2213" ]
+                }
+              ]
+            },
+            {
+              "ten_dinh_huong": "Khoa học máy tính và dịch vụ",
+              "hoc_phan": [
+                {
+                  "stt": 56,
+                  "ma_hoc_phan": "INT3501",
+                  "ten_tieng_viet": "Khoa học dịch vụ",
+                  "ten_tieng_anh": "Service Sciences",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT1007" ]
+                },
+                {
+                  "stt": 57,
+                  "ma_hoc_phan": "INT3505",
+                  "ten_tieng_viet": "Kiến trúc hướng dịch vụ",
+                  "ten_tieng_anh": "Service Oriented Architecture",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2204" ]
+                },
+                {
+                  "stt": 58,
+                  "ma_hoc_phan": "INT3506",
+                  "ten_tieng_viet": "Các hệ thống thương mại điện tử",
+                  "ten_tieng_anh": "E-commerce Systems",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT1007" ]
+                },
+                {
+                  "stt": 59,
+                  "ma_hoc_phan": "INT3404",
+                  "ten_tieng_viet": "Xử lý ảnh",
+                  "ten_tieng_anh": "Image Processing",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2210" ]
+                },
+                {
+                  "stt": 60,
+                  "ma_hoc_phan": "INT3512",
+                  "ten_tieng_viet": "Lập trình thi đấu",
+                  "ten_tieng_anh": "Competitive Programming",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": []
+                },
+                {
+                  "stt": 61,
+                  "ma_hoc_phan": "INT3407",
+                  "ten_tieng_viet": "Tin sinh học",
+                  "ten_tieng_anh": "Bioinformatics",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2215" ]
+                },
+                {
+                  "stt": 62,
+                  "ma_hoc_phan": "INT3132",
+                  "ten_tieng_viet": "Dự án công nghệ",
+                  "ten_tieng_anh": "Technology Project",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 21, "thuc_hanh": 24, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "INT2215" ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ten_nhom": "Các học phần bổ trợ",
+          "tong_tin_chi": 5,
+          "cac_nhom_con": [
+            {
+              "ten_nhom_con": "Các học phần bắt buộc",
+              "tong_tin_chi": 2,
+              "hoc_phan": [
+                {
+                  "stt": 63,
+                  "ma_hoc_phan": "INT3514",
+                  "ten_tieng_viet": "Pháp luật và đạo đức nghề nghiệp trong CNTT",
+                  "ten_tieng_anh": "Professional in Technology",
+                  "so_tin_chi": 2,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 0, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": []
+                }
+              ]
+            },
+            {
+              "ten_nhom_con": "Các học phần lựa chọn",
+              "tong_tin_chi": 3,
+              "ghi_chu": "Lấy 3 trong 50 tín chỉ lựa chọn",
+              "hoc_phan": [
+                 {
+                  "stt": 64,
+                  "ma_hoc_phan": "INT3102",
+                  "ten_tieng_viet": "Phương pháp tính",
+                  "ten_tieng_anh": "Numerical Methods",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "MAT1093", "MAT1042" ]
+                },
+                {
+                  "stt": 65,
+                  "ma_hoc_phan": "INT3103",
+                  "ten_tieng_viet": "Tối ưu hóa",
+                  "ten_tieng_anh": "Optimization",
+                  "so_tin_chi": 3,
+                  "so_gio_hoc": { "ly_thuyet": 30, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": [ "MAT1093", "MAT1042" ]
+                },
+                {
+                  "stt": 66,
+                  "ma_hoc_phan": "UET1001",
+                  "ten_tieng_viet": "Tiếng Anh bổ trợ",
+                  "ten_tieng_anh": "General English",
+                  "so_tin_chi": 4,
+                  "so_gio_hoc": { "ly_thuyet": 45, "thuc_hanh": 15, "tu_hoc": null },
+                  "mon_hoc_tien_quyet": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ten_nhom": "Khóa luận tốt nghiệp/Các học phần thay thế",
+          "tong_tin_chi": 7,
+          "hoc_phan": [
+            {
+              "stt": 70,
+              "ma_hoc_phan": "INT4050",
+              "ten_tieng_viet": "Khóa luận tốt nghiệp",
+              "ten_tieng_anh": "Graduation Thesis",
+              "so_tin_chi": 7,
+              "so_gio_hoc": null,
+              "mon_hoc_tien_quyet": []
+            }
+          ],
+          "thay_the_khoa_luan": {
+            "ghi_chu": "Bao gồm 1 học phần bắt buộc và 3 tín chỉ tự chọn",
+            "hoc_phan_bat_buoc": {
+              "stt": 71,
+              "ma_hoc_phan": "INT3509",
+              "ten_tieng_viet": "Dự án",
+              "ten_tieng_anh": "Projects",
+              "so_tin_chi": 4,
+              "so_gio_hoc": {
+                "ly_thuyet": 21,
+                "thuc_hanh": 39,
+                "tu_hoc": null
+              },
+              "mon_hoc_tien_quyet": []
+            },
+            "hoc_phan_tu_chon": {
+              "stt": 72,
+              "ghi_chu": "3 tín chỉ từ danh sách các học phần tự chọn theo các định hướng mà sinh viên chưa học",
+              "so_tin_chi": 3
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -50,10 +50,11 @@ function loadConfig(): AppConfig {
       process.env.GEMINI_EMBEDDING_MODEL || "text-embedding-004",
 
     PINECONE_API_KEY: PineconeAPI,
-    PINECONE_PROD_INDEX: process.env.PINECONE_PROD_INDEX || "flowise",
-    PINECONE_PROD_NAMESPACE: process.env.PINECONE_PROD_NAMESPACE || "IQ-TREE",
     PINECONE_TEST_INDEX: process.env.PINECONE_TEST_INDEX || "test",
-    PINECONE_TEST_NAMESPACE: process.env.PINECONE_TEST_NAMESPACE || "IQ-TREE",
+    PINECONE_TEST_NAMESPACE: 
+      process.env.PINECONE_TEST_NAMESPACE || "default",
+    PINECONE_PROD_INDEX: process.env.PINECONE_PROD_INDEX || "abet-test",
+    PINECONE_PROD_NAMESPACE: process.env.PINECONE_PROD_NAMESPACE || "abet-test-namespace",
   };
 
   return config;
@@ -71,17 +72,18 @@ const COMMAND = {
   HELP: "help",
 };
 
-const CONDENSE_PROMPT = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
+const CONDENSE_PROMPT = `Given our conversation history and my follow-up question, please rephrase my follow-up question to be a clear, standalone question that captures the full context of what I'm asking.
 
 Chat History:
 {chat_history}
 Follow Up Input: {question}
 Standalone Question:`;
 
-const STRICT_QA_PROMPT = `You are an AI chatbot specialized in answering questions about the phylogenetic software IQ-TREE.
-You are given the following extracted parts of a long document and a question.
-Provide a detailed, helpful, and accurate answer with explanations and examples if available.
-If the context is not related to the question, just only say "Im not sure." Don't try to make up an answer.
+const STRICT_QA_PROMPT = `You are my personal AI assistant specializing in ABET (Accreditation Board for Engineering and Technology) matters.
+I am relying on you to help me understand and work with ABET documentation and requirements.
+Use the provided context to give me accurate, detailed, and actionable assistance.
+If the context doesn't contain relevant information for my question, please let me know and suggest what additional information might be needed.
+
 
 Context:
 {context}
@@ -90,9 +92,10 @@ Question: {question}
 Detailed Answer:
 `;
 
-const CREATIVE_QA_PROMPT = `You are a creative and helpful AI assistant knowledgeable in phylogenetics, especially IQ-TREE.
-Use your imagination, reasoning, and related knowledge to generate helpful answers — even when the context is incomplete.
-You may speculate or infer answers based on related concepts, but always be clear and helpful.
+const CREATIVE_QA_PROMPT = `You are my creative and knowledgeable AI assistant for engineering education and ABET accreditation matters.
+I need you to help me think through problems, brainstorm solutions, and provide insights even when information is incomplete.
+Use your knowledge of engineering education, accreditation processes, and best practices to assist me.
+Feel free to make reasonable inferences and provide creative suggestions while being clear about what's factual vs. speculative.
 
 Context:
 {context}
@@ -148,6 +151,34 @@ async function main() {
     // vectorStoreTest = await PineconeStore.fromExistingIndex(embeddings, {
     //   pineconeIndex: pineconeIndexTest,
     // });
+
+    // Debug: Print configuration
+    // console.log("Pinecone Configuration:", {
+    //     index: CONFIG.PINECONE_PROD_INDEX,
+    //     namespace: CONFIG.PINECONE_PROD_NAMESPACE
+    // });
+    
+    // Test direct Pinecone query first
+    // console.log("Testing direct Pinecone query...");
+    // const queryResponse = await pineconeIndex.query({
+    //     vector: await embeddings.embedQuery("abet-test-namespace"),
+    //     topK: 3,
+    //     includeMetadata: true,
+    //     includeValues: false
+    // });
+    // console.log("Direct Pinecone query results:", queryResponse.matches?.length || 0);
+    
+    // // Test vector store search
+    // console.log("Testing vector store search...");
+    // const testQueries = ["abet-test-namespace", "abet", "accreditation", "recognition"];
+    
+    // for (const query of testQueries) {
+    //     const results = await vectorStore.similaritySearch(query, 3);
+    //     console.log(`Search for "${query}": ${results.length} documents`);
+    //     if (results.length > 0) {
+    //     console.log(`First result metadata:`, results[0].metadata);
+    //     }
+    // }
   } catch (error) {
     console.error("Failed to initialize Pinecone vector stores:", error);
     process.exit(1);
